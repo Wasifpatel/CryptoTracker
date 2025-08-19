@@ -12,7 +12,7 @@ const CoinContextProvider = (props) => {
   const fetchAllCoin = async () => {
     try {
       const res = await fetch(
-        `http://localhost:5000/api/coins?vs_currency=${currency.name}`
+        `/api/coins?vs_currency=${currency.name}`
       );
       if (!res.ok) {
         throw new Error("Failed to fetch coins from backend");
