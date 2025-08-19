@@ -1,24 +1,21 @@
 import React, { createContext, useState, useEffect } from "react";
+import axios from "axios";
 
 export const CoinContext = createContext();
 
 const CoinContextProvider = (props) => {
-  const [allCoin, setallCoin] = useState([]);
-  const [currency, setcurrency] = useState({
+  const [allCoin, setAllCoin] = useState([]);
+  const [currency, setCurrency] = useState({
     name: "usd",
     symbol: "$",
   });
 
   const fetchAllCoin = async () => {
     try {
-      const res = await fetch(
-        `/api/coins?vs_currency=${currency.name}`
-      );
-      if (!res.ok) {
-        throw new Error("Failed to fetch coins from backend");
-      }
-      const data = await res.json();
-      setallCoin(data);
+      const res = await axios.get(`/api/coins`, {
+        params: { vs_currency: currency.name },
+      });
+      setAllCoin(res.data);
     } catch (err) {
       console.error("Error fetching coins:", err);
     }
@@ -28,14 +25,8 @@ const CoinContextProvider = (props) => {
     fetchAllCoin();
   }, [currency]);
 
-  const contextValue = {
-    allCoin,
-    currency,
-    setcurrency,
-  };
-
   return (
-    <CoinContext.Provider value={contextValue}>
+    <CoinContext.Provider value={{ allCoin, currency, setCurrency }}>
       {props.children}
     </CoinContext.Provider>
   );
