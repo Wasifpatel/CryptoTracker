@@ -19,5 +19,3 @@ const App = () => {
 }
 
 export default App
-
-// bg-gradient-to-b from-[#0b004e] via-[#1d152f] to-[#002834]

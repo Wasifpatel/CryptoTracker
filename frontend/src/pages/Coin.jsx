@@ -15,7 +15,7 @@ function Coin() {
     if (!currency?.name) return;
     
     try {
-      const res = await fetch(`http://localhost:5000/api/coin/${coinId}/market_chart?vs_currency=${currency.name}&days=10`);
+      const res = await fetch(`/api/market_chart?id=${coinId}&vs_currency=${currency.name}&days=10`);
       
       if (!res.ok) {
         throw new Error(`Market chart API request failed with status ${res.status}`);
@@ -44,7 +44,7 @@ function Coin() {
         setError(null);
 
         // Call your backend proxy instead of CoinGecko directly
-        const res = await fetch(`http://localhost:5000/api/coin/${coinId}?currency=${currency.name}`);
+        const res = await fetch(`/api/coin?id=${coinId}&currency=${currency.name}`);
 
         if (!res.ok) {
           throw new Error(`API request failed with status ${res.status}`);
